@@ -23,7 +23,7 @@ if(isset($_SESSION["username"])) {
 			<div class="span6">
 				<div class="login-box">
 					<div id="logged-out" class="<?php if($loggedIn) { echo "hide"; }?>">
-						<form id="login" action="loginuser.php" class="form-inline login-form">
+						<form id="login" action="loginuser.php" class="form-inline login-form" method="post">
 							<input name="username" type="text" class="input-small" placeholder="Username" />
 							<input name="password" type="password" class="input-small" placeholder="Password" />
 							<label class="checkbox">
@@ -42,7 +42,7 @@ if(isset($_SESSION["username"])) {
 					</div>
 				</div>
 				
-				<form id="create-account" class="form-horizontal">
+				<form id="create-account" class="form-horizontal" method="post" action="createuser.php">
 					<div id="create-account-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -77,7 +77,7 @@ if(isset($_SESSION["username"])) {
 				</form>
 				
 				
-				<form id="update-account" class="form-horizontal">
+				<form id="update-account" class="form-horizontal" action="updateuser.php" method="">
 					<div id="update-account-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-update" aria-hidden="true">
 						<div class="modal-header">
 							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>

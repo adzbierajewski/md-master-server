@@ -59,6 +59,7 @@ $(document).ready(function() {
 	
 	function createSuccess(data) {
 		alert(data.message);
+        $("#create-account-modal").modal('hide');
 		setTimeout(refreshServers(),200);
 	}
 	
