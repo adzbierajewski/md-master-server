@@ -15,12 +15,25 @@ if(isset($_SESSION["username"])) {
 	<meta http-equiv="X-UA-Compatible" content="IE=Edge"/>
 	<link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
 	<link href="css/style.css" rel="stylesheet" media="screen">
+	<noscript>
+    <style type="text/css">
+        .create_account_hard_link {display:all;}
+				.create_account_toggle_link {display:none;}
+    </style>
+</noscript>
+<script>
+	<style type="text/css">
+			.create_account_hard_link {display:none;}
+			.create_account_toggle_link {display:all;}
+	</style>
+</script>
 </head>
 <body>
 	<div class="container">
 		<div class="row">
 			<div class="span6"><img src="img/header.png" /></div>
 			<div class="span6">
+				<?php if(!$_GET['action']=='create_account'){ ?>
 				<div class="login-box">
 					<div id="logged-out" class="<?php if($loggedIn) { echo "hide"; }?>">
 						<form id="login" action="loginuser.php" class="form-inline login-form" method="post">
@@ -30,18 +43,52 @@ if(isset($_SESSION["username"])) {
 								<input name="rememberme" type="checkbox" /> Remember me
 							</label>
 							<button type="submit" name="submit" class="btn btn-primary">Sign in</button>
-							<a href="#create-account-modal" role="button" class="btn" data-toggle="modal">Create Account</a>
+							<a href="index.php?action=create_account" role="button" class="btn create_account_hard_link">Create Account</a>
+							<a href="#create-account-modal" role="button" class="btn create_account_toggle_link" data-toggle="modal">Create Account</a>
 						</form>
 					</div>
 					<div id="logged-in" class="<?php if(!$loggedIn) { echo "hide"; }?>">
-						Logged in as <span id="username-text"><?php echo $username ?></span> 
+						Logged in as <span id="username-text"><?php echo $username ?></span>
 						<span class="pull-right">
-							<a href="#update-account-modal" data-toggle="modal">Update Account</a> | 
+							<a href="#update-account-modal" data-toggle="modal">Update Account</a> |
 							<a id="logout-link" href="logoutuser.php">Logout</a>
 						</span>
 					</div>
 				</div>
-				
+				<?php } ?>
+				<?php if($_GET['action']=='create_account'){ ?>
+				<form id="create-account" class="form-horizontal" method="post" action="createuser.php">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+							<h3 id="modal-create">Create Account</h3>
+						</div>
+						<div class="modal-body">
+							<div class="control-group">
+								<label class="control-label" for="inputEmail">Username</label>
+								<div class="controls">
+									<input type="text" name="username" id="create-username" tabindex="30" placeholder="Username" required><span class="help-inline"><span id="username-check" class="hide label"></span></span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="create-password">Password</label>
+								<div class="controls">
+									<input type="password" name="password" id="create-password" tabindex="31" placeholder="Password" required><span class="help-inline"><span id="password-check" class="hide label"></span></span>
+									<input type="password" name="passwordagain" id="create-password-again" tabindex="32" placeholder="Password Again" required><span class="help-inline"><span id="password-match" class="hide label"></span></span>
+								</div>
+							</div>
+							<div class="control-group">
+								<label class="control-label" for="create-email">Email</label>
+								<div class="controls">
+									<input type="text" name="email" id="create-email" tabindex="33" placeholder="Email (optional)">
+								</div>
+							</div>
+						</div>
+						<div class="modal-footer">
+							<button tabindex="40" class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+							<button tabindex="35" class="btn btn-primary" type="submit">Create Account</button>
+						</div>
+				</form>
+				<?php } ?>
 				<form id="create-account" class="form-horizontal" method="post" action="createuser.php">
 					<div id="create-account-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-create" aria-hidden="true">
 						<div class="modal-header">
@@ -75,8 +122,8 @@ if(isset($_SESSION["username"])) {
 						</div>
 					</div>
 				</form>
-				
-				
+
+
 				<form id="update-account" class="form-horizontal" action="updateuser.php" method="">
 					<div id="update-account-modal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-update" aria-hidden="true">
 						<div class="modal-header">
@@ -110,7 +157,7 @@ if(isset($_SESSION["username"])) {
 						</div>
 					</div>
 				</form>
-				
+
 				<!--This height needs to be slightly less than the header.png-->
 				<div style="position:relative; height:130px;">
 					<div style="position:absolute;right:0;bottom:0">
