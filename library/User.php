@@ -6,18 +6,18 @@ class User {
 	//Static Functions
 	public static function getUser($username) {
 		$user = new User();
-		
+
 		//Grab connection object
 		$mysqli = Utility::getSQLConnection();
-		
+
 		//Prepare query to find user
 		$stmt = $mysqli->prepare("SELECT user_id, username, password_hash, email, joined_date, last_login_date FROM users WHERE UPPER(username) = UPPER(?)");
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		$stmt->bind_param("s", $username);
-		
+
 		//Run query
 		$stmt->execute();
 		if ($mysqli->errno) {
@@ -25,18 +25,18 @@ class User {
 		    unset($stmt);
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		$stmt->bind_result($userId, $username, $passwordHash, $email, $joinedDate, $lastLoginDate);
-		
+
 		$result = $stmt->fetch();
-		
+
 		$stmt->close();
 		unset($stmt);
-		
+
 		if(!$result) { //Not found or error.
-			return null; 
-		}		
-		
+			return null;
+		}
+
 		//Fill user object
 		$user->setUserId($userId);
 		$user->setUsername($username);
@@ -44,98 +44,98 @@ class User {
 		$user->setEmail($email);
 		$user->setJoinedDate($joinedDate);
 		$user->setLastLoginDate($lastLoginDate);
-				
+
 		return $user;
 	}
-	
+
 	public static function createUser(User $user) {
 		if(User::getUser($user->username) !== null) {
 			throw new Exception("Error: User already exists!");
 		}
-		
+
 		//Grab connection object
 		$mysqli = Utility::getSQLConnection();
-		
+
 		$stmt = $mysqli->prepare("INSERT INTO users(username, password_hash, email, last_login_date) VALUES (?,?,?, NOW())");
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		//Bind parameters
 		$stmt->bind_param("sss", $user->getUsername(), $user->getPasswordHash(), $user->getEmail());
-		
+
 		//Execute statement
 		$stmt->execute();
-		
+
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		$stmt->close();
 		unset($stmt);
-		
+
 		return "User created successfully.";
 	}
-	
+
 	//Changes password or email
 	public static function updateUser(User $user) {
 		if(User::getUser($user->username) == null) {
 			throw new Exception("Error: User not found!");
 		}
-		
+
 		//Grab connection object
 		$mysqli = Utility::getSQLConnection();
-		
+
 		$stmt = $mysqli->prepare("UPDATE users SET password_hash = ?, email = ? WHERE user_id = ?");
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		//Bind parameters
 		$stmt->bind_param("ssi", $user->getPasswordHash(), $user->getEmail(), $user->getUserId());
-		
+
 		//Execute statement
 		$stmt->execute();
-		
+
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		$stmt->close();
 		unset($stmt);
-		
+
 		return "User data updated successfully.";
 	}
-	
+
 	public static function updateLoginDate(User $user) {
 		if(User::getUser($user->username) == null) {
 			throw new Exception("Error: User not found!");
 		}
-		
+
 		//Grab connection object
 		$mysqli = Utility::getSQLConnection();
-		
+
 		$stmt = $mysqli->prepare("UPDATE users SET last_login_date = NOW() WHERE user_id = ?");
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		//Bind parameters
 		$stmt->bind_param("i", $user->getUserId());
-		
+
 		//Execute statement
 		$stmt->execute();
-		
+
 		if ($mysqli->errno) {
 			trigger_error($mysqli->error,E_USER_ERROR);
 		}
-		
+
 		$stmt->close();
 		unset($stmt);
-		
+
 		return "User login date updated.";
 	}
-	
+
 	//Object Functions
 	public function setPassword($password) {
 		if(strlen($password) < 6) {
@@ -144,12 +144,12 @@ class User {
 		if(strlen($password) > 72) {
 			throw new Exception("Error: Password is too long (72 chars max).");
 		}
-		
+
 		$hasher = Utility::getPasswordHasher();
 		$hash = $hasher->HashPassword($password);
 		$this->setPasswordHash($hash);
 	}
-	
+
 	public function checkPassword($password) {
 		$hasher = Utility::getPasswordHasher();
 		return $hasher->CheckPassword($password, $this->passwordHash);
@@ -162,8 +162,8 @@ class User {
 	private $email;
 	private $joinedDate;
 	private $lastLoginDate;
-	
-	
+
+
 	//Getters/Setters
 	public function getUserId(){
 		return $this->userId;
@@ -186,14 +186,14 @@ class User {
 		if(preg_match('/^(\w|-){1,16}$/', $username) === 0) {
 			throw new Exception("Error: Invalid username (allowed characters: a-z,A-Z,0-9,-,_)");
 		}
-	
+
 		$this->username = (string)$username;
 	}
 
 	public function getPasswordHash(){
 		return $this->passwordHash;
 	}
-	
+
 	public function setPasswordHash($passwordHash){
 		$this->passwordHash = (string)$passwordHash;
 	}

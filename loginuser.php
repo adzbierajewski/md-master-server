@@ -5,11 +5,11 @@ function serverLogin() {
 	//Grab input
 	$username = $_REQUEST["username"];
 	$password = $_REQUEST["password"];
-	
+
 	$user = User::getUser($username);
-	
+
 	session_start();
-	
+
 	if($user === null || !$user->checkPassword($password)) {
 		if(isset($_SESSION["username"])) {
 			session_unset();
@@ -32,10 +32,17 @@ try {
 } catch (Exception $e) {
 	$message = $e->getMessage();
 	$result = "false";
+	if($_GET['action']=='hard_link'){
+		header('Location: index.php?error=1');
+	}
 }
 ?>{
 	"result":<?php echo $result; ?>,
 	"message":"<?php echo $message; ?>",
 	"username":"<?php echo $_SESSION["username"]; ?>",
 	"email":"<?php echo $_SESSION["email"]; ?>"
+}
+<?php
+if($_GET['action']=='hard_link'){
+	header('Location: index.php');
 }

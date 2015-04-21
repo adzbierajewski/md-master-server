@@ -1,5 +1,8 @@
 $(document).ready(function() {
 
+	$("#login_hard_link").hide();
+	$("#create_account_hard_link").hide();
+
 	$.ajaxSetup({
 		type: "POST"
 	});
@@ -10,32 +13,32 @@ $(document).ready(function() {
 	$(document).ajaxStop(function() {
 		$("body").removeClass("loading");
 	});
-	
+
 	$("#logout-link").click(function() {
 		logoutUser();
 		return false;
 	});
-	
+
 	$("#refresh-servers").click(function() {
 		refreshServers();
 		return false;
 	});
-	
+
 	$("#login").submit(function(){
 		login();
 		return false;
 	});
-	
+
 	$("#create-account").submit(function(){
 		createAccount();
 		return false;
 	});
-	
+
 	$("#update-account").submit(function(){
 		updateAccount();
 		return false;
 	});
-	
+
 	$("#create-username").keyup(function(){
 		$("#username-check").html(checkUsername($("#create-username").val()));
 	});
@@ -45,59 +48,59 @@ $(document).ready(function() {
 	$("#create-password-again").keyup(function(){
 		$("#password-match").html(checkPasswordMatch("#password-match","#create-password","#create-password-again"));
 	});
-	
+
 	function createAccount() {
-		$.post("createuser.php", $("#create-account").serialize(), function(data) { 
+		$.post("createuser.php", $("#create-account").serialize(), function(data) {
 			if(data.result) {
-				createSuccess(data); 
+				createSuccess(data);
 			} else {
 				createFailure(data);
 			}
 		},
 		"json");
 	}
-	
+
 	function createSuccess(data) {
 		alert(data.message);
         $("#create-account-modal").modal('hide');
 		setTimeout(refreshServers(),200);
 	}
-	
+
 	function createFailure(data) {
 		alert(data.message);
 	}
-	
+
 	function updateAccount() {
-		$.post("updateuser.php", $("#update-account").serialize(), function(data) { 
+		$.post("updateuser.php", $("#update-account").serialize(), function(data) {
 			if(data.result) {
-				updateSuccess(data); 
+				updateSuccess(data);
 			} else {
 				updateFailure(data);
 			}
 		},
 		"json");
 	}
-	
+
 	function updateSuccess(data) {
 		alert(data.message);
 		setTimeout(refreshServers(),200);
 	}
-	
+
 	function updateFailure(data) {
 		alert(data.message);
 	}
-	
+
 	function login() {
-		$.post("loginuser.php", $("#login").serialize(), function(data) { 
+		$.post("loginuser.php", $("#login").serialize(), function(data) {
 			if(data.result) {
-				loginSuccess(data); 
+				loginSuccess(data);
 			} else {
 				loginFailure(data);
 			}
 		},
 		"json");
 	}
-	
+
 	function loginSuccess(data) {
 		$("#logged-out").addClass("hide");
 		$("#logged-in").removeClass("hide");
@@ -105,11 +108,11 @@ $(document).ready(function() {
 		alert(data.message);
 		setTimeout(refreshServers(),200);
 	}
-	
+
 	function loginFailure(data) {
 		alert(data.message);
 	}
-	
+
 	function logoutUser() {
 		$.post("logoutuser.php",function(data) {
 			$("#logged-out").removeClass("hide");
@@ -117,16 +120,16 @@ $(document).ready(function() {
 			setTimeout(refreshServers(),200);
 		});
 	}
-	
+
 	function refreshServers() {
 		$.post("servers.php",function(data) {
 			$("#server-container").html(data);
 		});
 	}
-	
+
 	function checkUsername(username) {
 		var result = $("#username-check");
-		
+
 		if(username.length == 0) {
 			result.removeClass();
 			result.addClass("label hide");
@@ -146,17 +149,17 @@ $(document).ready(function() {
 			return "";
 		}
 	}
-	
+
 	function checkPasswordStrength(password, resultId) {
 	    var strength = 0;
 		var result = $(resultId);
-	
+
 		if(password.length === 0) {
 			result.removeClass();
 			result.addClass("label hide");
 			return "";
 		}
-	
+
 		if(password.length < 6) {
 			result.removeClass();
 			result.addClass("label label-important");
@@ -191,16 +194,16 @@ $(document).ready(function() {
 			return "Strong";
 		}
 	}
-	
+
 	function checkPasswordMatch(resultId, passwordId, passwordAgainId) {
-		//var result = $("#password-match");
+		//var result = $("#password-match");emember me
 		//var password = $("#create-password");
 		//var passwordAgain = $("#create-password-again");
-		
+
 		var result = $(resultId);
 		var password = $(passwordId);
 		var passwordAgain = $(passwordAgainId);
-		
+
 		if(password.val().length === 0) {
 			result.removeClass();
 			result.addClass("label hide");

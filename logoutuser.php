@@ -10,5 +10,6 @@ if(isset($_SESSION["username"])) {
 	session_regenerate_id(true);
 }
 
-echo "Successfully logged out."
+echo "Successfully logged out.";
+header('Location: index.php');
 ?>
