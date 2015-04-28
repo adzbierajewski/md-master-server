@@ -1,4 +1,4 @@
-<?php 
+<?php
 require_once "library/User.php";
 
 function UpdateUser() {
@@ -34,11 +34,11 @@ function UpdateUser() {
 			$user->setEmail($email);
 			$isEmailUpdate = true;
 		}
-		
+
 		if($isPasswordUpdate || $isEmailUpdate) {
 			//Ready to update user
 			User::updateUser($user);
-			
+
 			if($isPasswordUpdate && $isEmailUpdate) {
 				return "User successfully updated.";
 			} elseif($isPasswordUpdate) {
@@ -48,6 +48,9 @@ function UpdateUser() {
 			}
 		} else {
 			throw new Exception("Error: No user information to update.");
+			if($_GET['action']=='hard_link'){
+				header('Location: index.php?action=update_user&error=1&message=' . $message);
+			}
 		}
 	}
 }
@@ -63,4 +66,8 @@ try {
 ?>{
 	"result":<?php echo $result; ?>,
 	"message":"<?php echo $message; ?>"
+}
+<?php
+if($_GET['action']=='hard_link'){
+	header('Location: index.php?action=update_user');
 }
