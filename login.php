@@ -29,7 +29,7 @@ function serverLogin() {
 	return $serverAuthCode . "\n" . $server->getAddress() . "\n" . $server->getPort();
 }
 try {
-	echo serverLogin(); echo SID;
+	echo serverLogin(); echo $SID;
 } catch (Exception $e) {
 	echo $e->getMessage();
 }
