@@ -1,0 +1,453 @@
+* {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+/*
+ * -- BASE STYLES --
+ * Most of these are inherited from Base, but I want to change a few.
+ */
+ * {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+#sidebar {
+    background-color: rgba(255,255,255,0.8);
+    border-right:10px solid #999;
+    height:100%;
+    position: absolute;
+    width: 240px;
+}
+#sidebar strong {
+    display: block;
+    clear: both;
+    margin:5px 5px 0 5px;
+}
+
+#sidebar input[type="text"] {
+    border:1px solid #999;
+    display: inline-block;
+    clear: both;
+    margin:2px 5px 0 5px;
+    padding:2px;
+    width:224px;
+}
+
+#sidebar input[type="checkbox"] {
+    border:1px solid #999;
+    clear: left;
+    margin:2px 5px 0 5px;
+    vertical-align:bottom;
+}
+
+#sidebar label {
+    display: block;
+    padding:0 5px 2px 5px;
+    clear:both;
+}
+
+#model {
+    display: inline-block;
+    position: absolute;
+    left: 350px;
+}
+
+#canvas {
+    bottom:10px;
+    left: 86px;
+    position:absolute;
+    z-index:1;
+}
+
+#info {
+    color: #FFFFFF;
+    bottom:5px;
+    font-size:9px;
+    right:5px;
+    position:absolute;
+    text-align:right;
+    z-index:1;
+}
+
+#info a {
+    color: #FFFFFF;
+    font-weight:bold;
+}
+.skinupload {
+    background: rgb(28, 184, 65);
+    display: block;
+    position: relative;
+    width: 300px;
+    margin: auto;
+    cursor: pointer;
+    border: 0;
+    height: 60px;
+    border-radius: 5px;
+    outline: 0;
+}
+.skinupload:hover:after {
+    background: rgb(28, 184, 65);
+}
+.skinupload:after {
+    transition: 200ms all ease;
+    border-bottom: 3px solid rgba(0,0,0,.2);
+    background: rgb(28, 184, 65);
+    text-shadow: 0 2px 0 rgba(0,0,0,.2);
+    color: #fff;
+    font-size: 20px;
+    text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    content: 'Upload a skin';
+    line-height: 60px;
+    border-radius: 5px;
+}
+html {
+    height: 100%;
+}
+
+body {
+    line-height: 1.7em;
+    color: #7f8c8d;
+    font-size: 13px;
+    height: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+label {
+    color: #34495e;
+}
+
+.pure-img-responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+/*
+ * -- LAYOUT STYLES --
+ * These are some useful classes which I will need
+ */
+.l-box {
+    padding: 1em;
+}
+
+.l-box-lrg {
+    padding: 2em;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+}
+
+.is-center {
+    text-align: center;
+}
+
+/*
+ * -- PURE BUTTON STYLES --
+ * I want my pure-button elements to look a little different
+ */
+.pure-button {
+    background-color: #1f8dd6;
+    color: white;
+    padding: 0.5em 2em;
+    border-radius: 5px;
+}
+
+a.pure-button-primary {
+    background: white;
+    color: #1f8dd6;
+    border-radius: 5px;
+    font-size: 120%;
+}
+
+/*
+ * -- EXTRA BUTTON STYLES --
+ * Defines some extra button colors. As seen on: http://purecss.io/buttons/
+ */
+.bg-success {
+    background: rgb(28, 184, 65);
+}
+.bg-error {
+    background: rgb(202, 60, 60);
+}
+.bg-warning {
+    background: rgb(223, 117, 20);
+}
+.bg-secondary {
+    background: rgb(66, 184, 221);
+}
+
+a.pure-button-transparent {
+	background: transparent;
+	color: white;
+	box-shadow:inset 0px 0px 0px 3px white;
+	-webkit-box-shadow:inset 0px 0px 0px 10px #f00;
+	-moz-box-shadow:inset 0px 0px 0px 10px #f00;
+	border-radius: 5px;
+	font-size: 120%;
+}
+
+/*
+ * -- MENU STYLES --
+ * I want to customize how my .pure-menu looks at the top of the page
+ */
+.home-menu {
+    padding: 0.5em;
+    text-align: center;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.10);
+    background: rgba(0, 0, 0, 0.9); /*#2d3e50;*/
+}
+.pure-menu .pure-menu-fixed {
+    /* Fixed menus normally have a border at the bottom. */
+    border-bottom: none;
+    /* I need a higher z-index here because of the scroll-over effect. */
+    z-index: 4;
+}
+
+.home-menu .pure-menu-heading {
+    color: white;
+    text-transform: none;
+}
+
+.home-menu .pure-menu-selected a,
+.home-menu .pure-menu-selected a:visited {
+    color: white;
+    font-weight: bold;
+}
+
+.home-menu li a {
+    color: #6FBEF3;
+}
+.home-menu li a:hover,
+.home-menu li a:focus {
+    background: rgba(255, 255, 255, 0.2);;
+    border: none;
+    color: #AECFE5;
+}
+
+.header-login {
+	float: left;
+    font-size: 85%;
+    display: none;
+}
+.header-login fieldset {
+    padding-bottom: 0.35em;
+}
+@media (min-width: 1000px) {
+    .header-login {
+        display: block;
+    }
+}
+
+/*
+ * -- SPLASH STYLES --
+ * This is the blue top section that appears on the page.
+ */
+.splash-container {
+    /*background: #1f8dd6;*/
+    background: transparent url('/img/background.jpg');
+    background-size: cover;
+    background-position: center;
+    z-index: 1;
+    overflow: hidden;
+    /* The following styles are required for the "scroll-over" effect */
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    position: fixed !important;
+}
+
+.splash {
+    /* absolute center .splash within .splash-container */
+    width: 80%;
+    height: 70%;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    text-align: center;
+    text-transform: uppercase;
+    background-color: rgba(0, 0, 0, 0.75);
+    box-shadow: 0 0 4em rgba(0, 0, 0, 1);
+}
+
+.centerbox-container {
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+}
+.centerbox {
+    width: 50%;
+    height: 50%;
+    margin: auto;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    padding: 1em;
+}
+
+.centerbox hr {
+    border: none;
+    border-top: 1px solid #CCCCCC;
+}
+
+.pull-right {
+    float: right;
+}
+
+/* This is the subheading that appears on the blue section */
+.splash-subhead {
+    color: white;
+    letter-spacing: 0.05em;
+    opacity: 0.8;
+}
+
+/*
+ * -- CONTENT STYLES --
+ * This represents the content area (everything below the blue section)
+ */
+.content-wrapper {
+    /* These styles are required for the "scroll-over" effect */
+    position: absolute;
+    top: 100%;
+    width: 100%;
+    min-height: 12%;
+    z-index: 2;
+    background: rgb(220, 220, 220);
+    box-shadow: 0 2em 2em 2em rgba(0, 0, 0, 0.9);
+}
+
+/* Serverlist styles */
+.serverlist-wrapper {
+    padding-top: 3.7em;
+    min-height: 100%;
+    background: rgb(220, 220, 220);
+}
+.serverlist-image {
+    padding-right: 1em;
+}
+.serverlist-entry {
+    padding: 0 1em 1em 1em;
+    border-top: 2px dotted #CCC;
+    /*line-height: 1.5em;*/
+}
+.serverlist-entry p {
+    margin: 0;
+    /*font-size: 90%;*/
+    /*background-color: #eee;*/
+}
+.serverlist-entry h2 a {
+    color: #22aa22;
+    text-decoration: none;
+}
+.serverlist-entry h2 a.offline-link {
+    color: #aa2222;
+}
+.serverlist-messages {
+    text-align: center;
+    font-weight: bold;
+    color: #222222;
+}
+
+/* This is the class used for the main content headers (<h2>) */
+.content-head {
+    font-weight: 400;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin: 2em 0 1em;
+}
+
+/* This is a modifier class used when the content-head is inside a ribbon */
+.content-head-ribbon {
+    color: white;
+}
+
+/* This is the class used for the content sub-headers (<h3>) */
+.content-subhead {
+    color: #1f8dd6;
+}
+.content-subhead i {
+    margin-right: 7px;
+}
+
+/* This is the class used for the dark-background areas. */
+.ribbon {
+    background: #2d3e50;
+    color: #aaa;
+    box-shadow: inset 0 -2em 2em -2em rgba(0, 0, 0, 0.9),
+                inset 0 2em 2em -2em rgba(0, 0, 0, 0.9);
+}
+
+/* This is the class used for the footer */
+.footer {
+    background: #111;
+}
+.footer a {
+    color: #F0F0F0;
+    text-decoration: none;
+}
+.footer a:hover {
+    color: #E0E0E0;
+}
+
+/*
+ * -- TABLET (AND UP) MEDIA QUERIES --
+ * On tablets and other medium-sized devices, we want to customize some
+ * of the mobile styles.
+ */
+@media (min-width: 48em) {
+    /* We increase the body font size */
+    body {
+        font-size: 16px;
+    }
+    /* We want to give the content area some more padding */
+    .content {
+        padding: 1em;
+    }
+
+    /* We can align the menu header to the left, but float the
+    menu items to the right. */
+    .home-menu {
+        text-align: left;
+    }
+    .home-menu ul {
+        float: right;
+    }
+
+    /* We decrease the width of the .splash, since we have more width
+    to work with */
+    .splash {
+        width: 50%;
+        height: 50%;
+    }
+
+    .splash-head {
+        font-size: 250%;
+    }
+
+    /* We remove the border-separator assigned to .l-box-lrg */
+    .l-box-lrg {
+        border: none;
+    }
+}
+
+/*
+ * -- DESKTOP (AND UP) MEDIA QUERIES --
+ * On desktops and other large devices, we want to over-ride some
+ * of the mobile and tablet styles.
+ */
+@media (min-width: 78em) {
+    /* We increase the header font size even more */
+    .splash-head {
+        font-size: 300%;
+    }
+}
